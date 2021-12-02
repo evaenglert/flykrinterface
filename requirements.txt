@@ -1,4 +1,6 @@
-streamlit
+streamlit==1.2.0
+streamlit-webrtc==0.31.3
+aiortc==1.2.1
 numpy
 requests
 json5
@@ -14,6 +16,5 @@ opencv-contrib-python-headless
 mediapipe
 cvzone
 av
-streamlit_webrtc
 #other
 matplotlib
