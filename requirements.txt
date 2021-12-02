@@ -10,7 +10,7 @@ pickle5
 # os-sys
 
 #for handling image
-opencv-python-headless
+opencv-python
 opencv-contrib-python-headless
 mediapipe
 cvzone
