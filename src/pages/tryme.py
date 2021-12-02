@@ -1,10 +1,10 @@
 import streamlit as st
 import src.code.live_object_detection_asl as lod_asl
-import src.code.live_object_detection_arabic as lod_arabic
+
 import src.code.app_flashcard_asl as fcard_asl
-import src.code.app_flashcard_arabic as fcard_arabic
+
 import src.code.app_flashcard_asl_fileupload as fcard_asl_upload
-import src.code.app_flashcard_arabic_fileupload as fcard_arabic_upload
+
 # pylint: disable=line-too-long
 #Import for Deep learning model
 import tensorflow as tf
@@ -37,8 +37,6 @@ model_asl, label_asl = retrieve_model(PATH_MODEL_ASL, PATH_LABEL_ASL)
 PATH_MODEL_ARABIC = "./saved_models/arabic_model.h5"
 PATH_LABEL_ARABIC = "./saved_models/class_name_arabic.npy"
 
-model_arabic, label_arabic = retrieve_model(PATH_MODEL_ARABIC,
-                                            PATH_LABEL_ARABIC)
 
 
 def write(mas=model_asl,
@@ -50,11 +48,10 @@ def write(mas=model_asl,
                            index=0,
                            options=[
                                "Live demo with American sign",
-                               "Live demo with Arabic sign",
+
                                "Live Knowledge Test ASL w/ Flashcards",
-                               "Live Knowledge Test ARABIC w/ Flashcards",
-                               "File upload Knowledge Test ASL w/ Flashcards",
-                               "File upload Knowledge Test ARABIC w/ Flashcards"
+
+                               "File upload Knowledge Test ASL w/ Flashcards"
                            ])
 
     if options=="Live demo with American sign":
@@ -64,12 +61,7 @@ def write(mas=model_asl,
                     unsafe_allow_html=True)
         st.write("##")
         lod_asl.app_object_detection_asl(model=mas, label=lasl)
-    elif options=="Live demo with Arabic sign":
-        st.markdown(
-            "<h4 style='text-align: center; color: black;'>Click on the start button to activate the webcam</h4",
-            unsafe_allow_html=True)
-        st.write("##")
-        lod_arabic.app_object_detection_arabic(model=marab, label=larab)
+
     elif options=="Live Knowledge Test ASL w/ Flashcards":
         st.markdown(
             "<h4 style='text-align: center; color: black;'>Upload an image to test your knowledge about sign language</h4",
@@ -78,12 +70,6 @@ def write(mas=model_asl,
         fcard_asl.flashcard(model=mas, label=lasl)
         # # lod_arabic.app_object_detection_arabic()
         # flash_card = fcard.GameState()
-    elif options=="Live Knowledge Test ARABIC w/ Flashcards":
-        st.markdown(
-            "<h4 style='text-align: center; color: black;'>Upload an image to test your knowledge about sign language</h4",
-            unsafe_allow_html=True)
-        st.write("##")
-        fcard_arabic.flashcard(model=marab, label=larab)
 
     elif options == "File upload Knowledge Test ASL w/ Flashcards":
         st.markdown(
@@ -91,9 +77,3 @@ def write(mas=model_asl,
             unsafe_allow_html=True)
         st.write("##")
         fcard_asl_upload.flashcard(model=mas, label=lasl)
-    elif options == "File upload Knowledge Test ARABIC w/ Flashcards":
-        st.markdown(
-            "<h4 style='text-align: center; color: black;'>Upload an image to test your knowledge about sign language</h4",
-            unsafe_allow_html=True)
-        st.write("##")
-        fcard_arabic_upload.flashcard(model=marab, label=larab)
