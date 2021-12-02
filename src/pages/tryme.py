@@ -10,8 +10,6 @@ import src.code.app_flashcard_arabic_fileupload as fcard_arabic_upload
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 import numpy as np
-import pickle
-import os
 
 ASL = """
 <div style="text-align: center" class="contributors font-body text-bold">
@@ -27,33 +25,27 @@ def retrieve_model(PATH_MODEL, PATH_LABEL):
     # PATH_MODEL = "saved_models/asl_model2.h5"
     # PATH_LABEL = "saved_models/asl_class_names2.npy"
 
-    with open(PATH_LABEL, "rb") as fp:
-        label = pickle.load(fp)
     model = load_model(PATH_MODEL)
-    # label = np.load(PATH_LABEL, allow_pickle=True)
+    label = np.load(PATH_LABEL)
     return model, label
 
-
 PATH_MODEL_ASL = "./saved_models/asl_model2.h5"
-PATH_LABEL_ASL = "./saved_labels/asl_class_names2.txt"
+PATH_LABEL_ASL = "./saved_models/asl_class_names2.npy"
 
 model_asl, label_asl = retrieve_model(PATH_MODEL_ASL, PATH_LABEL_ASL)
 
 PATH_MODEL_ARABIC = "./saved_models/arabic_model.h5"
-PATH_LABEL_ARABIC = "./saved_labels/class_name_arabic.txt"
+PATH_LABEL_ARABIC = "./saved_models/class_name_arabic.npy"
 
 model_arabic, label_arabic = retrieve_model(PATH_MODEL_ARABIC,
                                             PATH_LABEL_ARABIC)
 
-def write(PATH_MODEL_ASL=PATH_MODEL_ASL):
-    # def write(mas=model_asl,
-    #           lasl=label_asl,
-    #           marab=model_arabic,
-    #           larab=label_arabic):
-    st.write(PATH_MODEL_ASL)
-    model = load_model(PATH_MODEL_ASL)
-    st.write(model.summary())
-    # print(mas.summary())
+
+def write(mas=model_asl,
+          lasl=label_asl,
+          marab=model_arabic,
+          larab=label_arabic):
+
     options = st.selectbox("Choose what you want to test today",
                            index=0,
                            options=[
